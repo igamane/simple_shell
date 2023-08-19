@@ -5,52 +5,74 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-/**
- * main - main function
- *
- * @argc: argument count
- *
- * @argv: argument variables
- *
- * @arge: envirement
- *
- * return: always 0
- */
+void execute(char **argument, char **buf, size_t *n, char *arge[], char *argv[]);
 
-void execute(char** argument, char **buf, size_t *n, char* arge[], char* argv[]);
-
-void prompt(char **buf, size_t *n, char* arge[], char* argv[])
+void prompt(char **buf, size_t *n, char *arge[], char *argv[])
 {
     size_t len;
     char **argument;
     int read;
+    char *del;
+    char *token;
+    char *tokenTwo;
+    char *buf_duplicate;
+    int j, k, l;
 
-    argument = malloc(sizeof(char*) * 2);
+    del = " ";
+    j = 0;
+    k = 0;
 
     printf("#cisfun$ ");
     read = getline(buf, n, stdin);
 
-    if(read == -1)
+    if (read == -1)
     {
-            printf("\n");
-            exit(-1);
+        printf("\n");
+        exit(-1);
     }
 
     len = strlen(*buf);
-
     if (len > 0 && (*buf)[len - 1] == '\n')
     {
         (*buf)[len - 1] = '\0';
     }
 
-    argument[0] = *buf;
-    argument[1] = NULL;
+    buf_duplicate = strdup(*buf);
+
+    token = strtok(*buf, del);
+    while (token)
+    {
+        token = strtok(NULL, del);
+        j++;
+    }
+
+    argument = malloc(sizeof(char *) * (j + 1)); // +1 for NULL
+
+    printf("%s\n", buf_duplicate);
+
+    tokenTwo = strtok(buf_duplicate, del);
+    argument[0] = tokenTwo;
+
+    k = 1;
+    while (tokenTwo)
+    {
+        tokenTwo = strtok(NULL, del);
+        argument[k] = tokenTwo;
+        k++;
+    }
+    free(buf_duplicate);
+    argument[k] = NULL;
+
+    for (l = 0; l < k; l++)
+    {
+        printf("%s\n", argument[l]);
+    }
 
     execute(argument, buf, n, arge, argv);
     free(argument);
 }
 
-void execute(char** argument, char **buf, size_t *n, char* arge[], char* argv[])
+void execute(char **argument, char **buf, size_t *n, char *arge[], char *argv[])
 {
     pid_t pid;
     int val;
@@ -79,9 +101,7 @@ void execute(char** argument, char **buf, size_t *n, char* arge[], char* argv[])
     }
 }
 
-int main(int argc __attribute__((unused)),
-         char *argv[],
-         char* arge[])
+int main(int argc __attribute__((unused)), char *argv[], char *arge[])
 {
     char *buf;
     size_t n;
