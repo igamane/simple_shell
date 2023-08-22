@@ -11,18 +11,17 @@
  */
 
 int main(int argc __attribute__((unused)),
-         char *argv[],
-         char* arge[])
+	char *argv[],
+	char *arge[])
 {
-    char *buf;
-    size_t n;
+	char *buf;
+	size_t n;
 
-    buf = NULL;
-    n = 0;
+	buf = NULL;
+	n = 0;
 
-    prompt(&buf, &n, arge, argv);
+	prompt(&buf, &n, arge, argv);
 
-    free(buf);
-    return 0;
+	free(buf);
+	return (0);
 }
-
