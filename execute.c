@@ -13,26 +13,26 @@
  */
 
 void execute(char **argument, char **buf,
-                size_t *n, char *arge[], char *argv[])
+		size_t *n, char *arge[], char *argv[])
 {
-        pid_t pid;
-        int val;
+	pid_t pid;
+	int val;
 
-        handel_path(argument);
+	handel_path(argument);
 
-        pid = fork();
-        if (pid == 0)
-        {
-                val = execve(argument[0], argument, arge);
-                if (val == -1)
-                {
-                        fprintf(stderr, "%s: ", argv[0]);
-                        perror("");
-                        exit(1);
-                }
-        } else
-        {
-                wait(NULL);
-                prompt(buf, n, arge, argv);
-        }
+	pid = fork();
+	if (pid == 0)
+	{
+		val = execve(argument[0], argument, arge);
+		if (val == -1)
+		{
+			fprintf(stderr, "%s: ", argv[0]);
+			perror("");
+			exit(1);
+
+	} else
+	{
+		wait(NULL);
+		prompt(buf, n, arge, argv);
+	}
 }
