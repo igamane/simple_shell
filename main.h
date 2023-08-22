@@ -10,7 +10,7 @@
 #include <sys/stat.h>
 
 void execute(char **argument, char **buf,
-                size_t *n, char *arge[], char *argv[]);
+		size_t *n, char *arge[], char *argv[]);
 void prompt(char **buf, size_t *n, char *arge[], char *argv[]);
 void handel_path(char **argument);
 
